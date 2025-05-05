@@ -1,5 +1,5 @@
-# geolocation
-
-1. Cliente (Frontend: HTML + JS)
-
-2. 
+geo-tracker/
+├── server.js
+├── package.json
+└── public/
+    └── index.html
