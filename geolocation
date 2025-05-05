@@ -1,0 +1,38 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Localização em tempo real</title>
+</head>
+<body>
+  <h1>Enviando localização via WebSocket</h1>
+  <script>
+    const socket = new WebSocket('ws://localhost:3000');
+
+    socket.addEventListener('open', () => {
+      console.log('Conectado ao servidor WebSocket');
+
+      navigator.geolocation.watchPosition(
+        (position) => {
+          const data = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            timestamp: position.timestamp
+          };
+          socket.send(JSON.stringify(data));
+          console.log('Enviado:', data);
+        },
+        (error) => {
+          console.error('Erro de geolocalização:', error.message);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0
+        }
+      );
+    });
+  </script>
+</body>
+</html>
