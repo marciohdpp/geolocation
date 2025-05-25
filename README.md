@@ -1,5 +1,5 @@
 /var/www/html/
-├── index2.html                ← Interface web com JavaScript
+├── index2.html               ← Interface web com JavaScript
 ├── receiver.php              ← Backend que recebe GPS e chama Python
 ├── script.py                 ← Script Python para reverse geocode
 └── logs/
