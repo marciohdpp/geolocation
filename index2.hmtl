@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Localização GPS</title>
+</head>
+<body>
+  <h2>Obter localização exata (com debug)</h2>
+  <button onclick="getLocation()">Clique aqui</button>
+  <pre id="output">Aguardando localização...</pre>
+
+  <script>
+    function log(msg) {
+      const el = document.getElementById("output");
+      el.textContent += "\n" + msg;
+    }
+
+    function getLocation() {
+      log("📍 Solicitando permissão de localização...");
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function (position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            log(`✅ Latitude: ${lat}`);
+            log(`✅ Longitude: ${lon}`);
+            log("📤 Enviando coordenadas para o servidor...");
+
+            fetch("receiver.php", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ latitude: lat, longitude: lon })
+            })
+            .then(res => res.text())
+            .then(data => {
+              log("📬 Resposta do servidor:");
+              log(data);
+            })
+            .catch(err => {
+              log("❌ Erro no fetch: " + err);
+              console.error(err);
+            });
+          },
+          function (error) {
+            log("❌ Erro ao obter localização: " + error.message);
+            console.error("Geo error:", error);
+          }
+        );
+      } else {
+        log("⚠️ Seu navegador não suporta geolocalização.");
+      }
+    }
+  </script>
+</body>
+</html>
