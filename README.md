@@ -12,7 +12,7 @@ chmod +x /var/www/html/script.py
 
 Abra o site
 
-www.jornaldevarginha.com.br/index2.html
+www.sociedadeholistica.com.br/index2.html
 
 tail -f /var/www/html/logs/php_debug.log
 tail -f /var/www/html/logs/script_debug.log
